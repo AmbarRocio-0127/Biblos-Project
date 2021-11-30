@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using APIBiblos.Context;
+using APIBiblos.Repository;
 
 namespace APIBiblos
 {
@@ -31,6 +32,8 @@ namespace APIBiblos
 
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
+
+            services.AddScoped<IBiblosRepository, BiblosRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIBiblos", Version = "v1" });

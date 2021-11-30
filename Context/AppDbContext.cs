@@ -15,6 +15,6 @@ namespace APIBiblos.Context
         }
 
         public DbSet<Libros> libros { get; set; }
-        public DbSet<Administrador> administradors { get; set; }
+        public DbSet<Usuarios> usuarios { get; set; }
     }
 }

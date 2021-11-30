@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace APIBiblos.Models
 {
-    public class Administrador
+    public class Usuarios
     {
         [Key]
         public int id { get; set; }
-        public string user { get; set; }
-        public string password { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Correo { get; set; }
+        public string Contrasena { get; set; }
     }
 }

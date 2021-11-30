@@ -9,14 +9,14 @@ namespace APIBiblos.Models
     public class Libros
     {
         [Key]
-        public int id { get; set; }
-        public string titulo { get; set; }
-        public string autor { get; set; }
-        public string fecha_publicacion { get; set; }
-        public string editorial { get; set; }
-        public string codigo { get; set; }
-        public string Vendidos { get; set; }
-        public int stock { get; set; }
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public string Autor { get; set; }
+        public DateTime? Fecha{ get; set; }
+        public string Editorial { get; set; }
+        public string Codigo { get; set; }
+        public int Vendidos { get; set; }
+        public int Cantidad { get; set; }
 
     }
 }

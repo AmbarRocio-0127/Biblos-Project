@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APIBiblos.Models;
+using APIBiblos.Repository;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +14,64 @@ namespace APIBiblos.Controllers
     [ApiController]
     public class BiblosController : ControllerBase
     {
-        // GET: api/<BiblosController>
+        private readonly IBiblosRepository _biblosRepository;
+
+        public BiblosController(IBiblosRepository biblosRepository)
+        {
+            _biblosRepository = biblosRepository;
+
+        }
+
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _biblosRepository.GetAll());
+
         }
 
-        // GET api/<BiblosController>/5
+
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return "value";
+            
+
+            if (id > 0)
+            {
+                 IEnumerable<Libros>listBook = await _biblosRepository.GetAll();
+                if (listBook.Count() < 1)
+                {
+                    return NoContent();
+                }
+            }
+            
+            return Ok(await _biblosRepository.GetById(id));
         }
 
-        // POST api/<BiblosController>
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<bool> Post(Libros book)
         {
+            var fecha = book.Fecha?.Date;
+            DateTime DateObject = Convert.ToDateTime(fecha);
+            book.Fecha = DateObject.Date;
+
+            return await _biblosRepository.Post(book);
         }
 
-        // PUT api/<BiblosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpPut]
+        public async Task<bool> Put(Libros book)
         {
+            return await (_biblosRepository.Update(book));
+
         }
 
-        // DELETE api/<BiblosController>/5
+
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<bool> Delete(int id)
         {
+            return await _biblosRepository.Delete(id);
         }
     }
 }
